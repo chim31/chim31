@@ -10,6 +10,8 @@
 class CpuModule: public Krell::IModule
 {
     private:
+        std::string _name;
+        std::string _dataStr;
         std::vector<double> _usages;
     public:
         CpuModule(int nb_threads);

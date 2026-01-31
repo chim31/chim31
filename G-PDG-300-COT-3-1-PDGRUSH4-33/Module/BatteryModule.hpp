@@ -10,7 +10,8 @@
 class BatteryModule: public Krell::IModule
 {
     private:
-        std::string _name; //name
+        std::string _name;
+        std::string _dataStr;
         int _percent; //percentage
         int _time; //remaining time
         std::string _charging; //charging state

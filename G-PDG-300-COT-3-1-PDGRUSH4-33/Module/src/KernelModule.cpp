@@ -6,7 +6,8 @@
 */
 
 #include "../KernelModule.hpp"
-
+#include <sys/utsname.h>
+#include <iostream>
 
 KernelModule::KernelModule(std::string name)
 {
@@ -18,7 +19,7 @@ void KernelModule::refresh()
     struct utsname buff;
 
     if (uname(&buff) != 0) {
-        perror("uname");
+        std::cerr << "invalide uname" << std::endl;
         return;
     }
     this->_kernel_name = std::string(buff.release);

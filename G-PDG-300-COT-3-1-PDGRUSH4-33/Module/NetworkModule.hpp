@@ -13,7 +13,7 @@ class NetworkModule: public Krell::IModule
         std::string _name;
         std::string _user_name;
     public:
-        UserModule(std::string name);
+        NetworkModule(std::string name);
         void refresh() override;
         const std::string& getData() const override;
         const std::string& getName() const override;

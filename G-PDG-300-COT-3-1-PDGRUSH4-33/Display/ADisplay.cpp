@@ -7,9 +7,8 @@
 
 #include "ADisplay.hpp"
 
-ADisplay::ADisplay(std::string name): _name(name)
+ADisplay::ADisplay(const std::string &name) : _name(name), _isrun(false)
 {
-
 }
 
 bool ADisplay::isRun() const
@@ -17,7 +16,7 @@ bool ADisplay::isRun() const
     return this->_isrun;
 }
 
-std::string& ADisplay::getName() const
+const std::string &ADisplay::getName() const
 {
     return this->_name;
 }

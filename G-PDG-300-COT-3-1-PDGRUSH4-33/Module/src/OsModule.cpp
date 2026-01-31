@@ -6,7 +6,7 @@
 */
 
 #include "../OsModule.hpp"
-
+#include <fstream>
 
 OsModule::OsModule(std::string name)
 {
@@ -20,7 +20,7 @@ void OsModule::refresh()
     std::string line;
 
     if (file.is_open()) {
-        while (std::getline(file, line) == 0) {
+        while (std::getline(file, line)) {
             if (line.find(search_term) == 0) {
                 size_t start = line.find('"') + 1;
                 size_t end = line.find_last_of('"');

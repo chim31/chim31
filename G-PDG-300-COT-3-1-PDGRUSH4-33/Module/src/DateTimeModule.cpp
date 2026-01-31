@@ -6,7 +6,9 @@
 */
 
 #include "../DateTimeModule.hpp"
-
+#include <ctime>
+#include <iomanip>
+#include <sstream>
 
 DateTimeModule::DateTimeModule(std::string name)
 {
@@ -21,7 +23,8 @@ void DateTimeModule::refresh()
     std::stringstream ss;
 
     ss << std::put_time(localtime, "%d/%m/%Y %H:%M:%S");
-    ss.str >> this->date_time;
+    //ss.str >> this->date_time;
+    this->date_time = ss.str();
 }
 
 const std::string& DateTimeModule::getData() const

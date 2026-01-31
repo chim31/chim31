@@ -5,15 +5,21 @@
 ** adisplay
 */
 
-#include "IDisplay.hpp"
+#ifndef ADISPLAY_HPP_
+#define ADISPLAY_HPP_
 
-class ADisplay : public Krell::IDisplay {
-    private:
-        std::string &_name;
-        bool _isrun = false;
+#include "../Interfaces/IDisplay.hpp"
+
+class ADisplay : public Krell::IDisplay
+{
+    protected:
+        std::string _name;
+        bool _isrun;
     public:
-    ADisplay(std::string name);
-    bool isRun() const override;
-    std::string& getName() const override;
-    virtual void update_display(const std::vector<Krell::IModule*>&modules) override = 0;
+        ADisplay(const std::string &name);
+        virtual ~ADisplay() = default;
+        bool isRun() const override;
+        const std::string &getName() const override;
 };
+
+#endif /* !ADISPLAY_HPP_ */
