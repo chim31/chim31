@@ -2,23 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** SfmlDisplay
 ** File description:
-** SFML display - Modern dark dashboard with card-based layout
-**
-** Color palette:
-**   Background:  #1a1b2e (deep navy)
-**   Card bg:     #232440 (dark slate)
-**   Card border: #2d2f54 (subtle border)
-**   Sidebar:     #16172a (darker navy)
-**   Header:      #1e1f36
-**   Text main:   #e0e0ec
-**   Text dim:    #8888a8
-**   Accent cyan: #00d4aa
-**   Accent blue: #4d8eff
-**   CPU orange:  #ff8c42
-**   RAM purple:  #a855f7
-**   Net green:   #34d399
-**   Battery yel: #fbbf24
-**   Date pink:   #f472b6
+** Init, themes, constructor, stop, and string parsing helper
 */
 
 #include "SfmlDisplay.hpp"
@@ -42,15 +26,15 @@ void SfmlDisplay::initThemes()
 {
     this->_defaultTheme = {sf::Color(100, 160, 255), sf::Color(100, 160, 255), ">"};
 
-    this->_themes["Hostname"]         = {sf::Color(0, 212, 170),   sf::Color(0, 212, 170),   "@"};
-    this->_themes["User"]             = {sf::Color(0, 212, 170),   sf::Color(0, 212, 170),   "$"};
-    this->_themes["Operating System"] = {sf::Color(77, 142, 255),  sf::Color(77, 142, 255),  "#"};
-    this->_themes["Kernel"]           = {sf::Color(77, 142, 255),  sf::Color(77, 142, 255),  "~"};
-    this->_themes["Date & Time"]      = {sf::Color(244, 114, 182), sf::Color(244, 114, 182), "*"};
-    this->_themes["CPU"]              = {sf::Color(255, 140, 66),  sf::Color(255, 140, 66),  "%"};
-    this->_themes["RAM"]              = {sf::Color(168, 85, 247),  sf::Color(168, 85, 247),  "="};
-    this->_themes["Network"]          = {sf::Color(52, 211, 153),  sf::Color(52, 211, 153),  "^"};
-    this->_themes["Battery"]          = {sf::Color(251, 191, 36),  sf::Color(251, 191, 36),  "+"};
+    this->_themes["Hostname"] = {sf::Color(0, 212, 170), sf::Color(0, 212, 170), "@"};
+    this->_themes["User"] = {sf::Color(0, 212, 170), sf::Color(0, 212, 170), "$"};
+    this->_themes["Operating System"] = {sf::Color(77, 142, 255), sf::Color(77, 142, 255), "#"};
+    this->_themes["Kernel"] = {sf::Color(77, 142, 255), sf::Color(77, 142, 255), "~"};
+    this->_themes["Date & Time"] = {sf::Color(244, 114, 182), sf::Color(244, 114, 182), "*"};
+    this->_themes["CPU"] = {sf::Color(255, 140, 66), sf::Color(255, 140, 66), "%"};
+    this->_themes["RAM"] = {sf::Color(168, 85, 247), sf::Color(168, 85, 247), "="};
+    this->_themes["Network"] = {sf::Color(52, 211, 153), sf::Color(52, 211, 153), "^"};
+    this->_themes["Battery"] = {sf::Color(251, 191, 36), sf::Color(251, 191, 36), "+"};
 }
 
 const CardTheme &SfmlDisplay::getTheme(const std::string &moduleName) const
@@ -71,7 +55,6 @@ void SfmlDisplay::init(const std::vector<Krell::IModule *> &modules)
     this->_window->setFramerateLimit(30);
     this->_isrun = true;
 
-    /* Try multiple font paths */
     std::vector<std::string> fontPaths = {
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
@@ -114,4 +97,22 @@ void SfmlDisplay::stop()
         this->_window = nullptr;
     }
     this->_isrun = false;
+}
+
+std::string SfmlDisplay::extractValue(const std::string &data, const std::string &key) const
+{
+    std::istringstream stream(data);
+    std::string line;
+
+    while (std::getline(stream, line)) {
+        std::size_t pos = line.find(key);
+        if (pos == 0 || (pos != std::string::npos && pos < 2)) {
+            std::string val = line.substr(pos + key.length());
+            std::size_t start = val.find_first_not_of(' ');
+            if (start != std::string::npos)
+                return val.substr(start);
+            return val;
+        }
+    }
+    return "";
 }

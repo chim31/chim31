@@ -2,23 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** SfmlDisplay
 ** File description:
-** SFML display - Modern dark dashboard with card-based layout
-**
-** Color palette:
-**   Background:  #1a1b2e (deep navy)
-**   Card bg:     #232440 (dark slate)
-**   Card border: #2d2f54 (subtle border)
-**   Sidebar:     #16172a (darker navy)
-**   Header:      #1e1f36
-**   Text main:   #e0e0ec
-**   Text dim:    #8888a8
-**   Accent cyan: #00d4aa
-**   Accent blue: #4d8eff
-**   CPU orange:  #ff8c42
-**   RAM purple:  #a855f7
-**   Net green:   #34d399
-**   Battery yel: #fbbf24
-**   Date pink:   #f472b6
+** SFML display - Background, Sidebar, Header, Card dispatcher
 */
 
 #include "SfmlDisplay.hpp"
@@ -71,41 +55,38 @@ void SfmlDisplay::drawSidebar(const std::vector<Krell::IModule *> &modules)
         y += 24.f;
     }
 
-    this->drawSeparator(16.f, (float)WIN_H - 50.f, (float)SIDEBAR_W - 32.f,
-                        sf::Color(45, 47, 84));
+    this->drawSeparator(16.f, (float)WIN_H - 50.f, (float)SIDEBAR_W - 32.f, sf::Color(45, 47, 84));
     this->drawText("Scroll to navigate", 16.f, (float)WIN_H - 38.f, 10, TEXT_DIM);
     this->drawText("A:Add  R:Remove", 16.f, (float)WIN_H - 22.f, 10, TEXT_DIM);
 }
-
 
 void SfmlDisplay::drawHeader()
 {
     this->drawRect(0, 0, (float)WIN_W, (float)HEADER_H, BG_HEADER);
     this->drawText("Dashboard", (float)SIDEBAR_W + 18.f, 16.f, 18, TEXT_MAIN, true);
-
-    this->drawRect((float)SIDEBAR_W, (float)HEADER_H - 2.f,
-                (float)WIN_W - (float)SIDEBAR_W, 2.f, sf::Color(0, 212, 170, 40));
+    this->drawRect((float)SIDEBAR_W, (float)HEADER_H - 2.f, (float)WIN_W - (float)SIDEBAR_W, 2.f, sf::Color(0, 212, 170, 40));
 }
 
 float SfmlDisplay::drawCard(Krell::IModule *mod, float x, float y, float w)
 {
     const std::string &name = mod->getName();
-    const std::map<std::string, std::string> &d = mod->getData();
+    const std::string &data = mod->getData();
 
     if (y > (float)WIN_H + 100.f || y < (float)HEADER_H - 400.f)
         return 80.f;
 
     if (name == "Date & Time")
-        return this->drawCardDateTime(d, x, y, w);
+        return this->drawCardDateTime(data, x, y, w);
     if (name == "CPU")
-        return this->drawCardCpu(d, x, y, w);
+        return this->drawCardCpu(data, x, y, w);
     if (name == "RAM")
-        return this->drawCardRam(d, x, y, w);
+        return this->drawCardRam(data, x, y, w);
     if (name == "Network")
-        return this->drawCardNetwork(d, x, y, w);
+        return this->drawCardNetwork(data, x, y, w);
     if (name == "Battery")
-        return this->drawCardBattery(d, x, y, w);
-    if (name == "Hostname" || name == "User" || name == "Operating System" || name == "Kernel")
-        return this->drawCardSystem(name, d, x, y, w);
-    return this->drawCardGeneric(name, d, x, y, w);
+        return this->drawCardBattery(data, x, y, w);
+    if (name == "Hostname" || name == "User"
+        || name == "Operating System" || name == "Kernel")
+        return this->drawCardSystem(name, data, x, y, w);
+    return this->drawCardGeneric(name, data, x, y, w);
 }

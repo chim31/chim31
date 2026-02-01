@@ -46,13 +46,15 @@ class SfmlDisplay : public ADisplay
         void drawHeader();
         float drawCard(Krell::IModule *mod, float x, float y, float w);
 
-        float drawCardDateTime(const std::map<std::string, std::string> &d, float x, float y, float w);
-        float drawCardSystem(const std::string &name, const std::map<std::string, std::string> &d, float x, float y, float w);
-        float drawCardCpu(const std::map<std::string, std::string> &d, float x, float y, float w);
-        float drawCardRam(const std::map<std::string, std::string> &d, float x, float y, float w);
-        float drawCardNetwork(const std::map<std::string, std::string> &d, float x, float y, float w);
-        float drawCardBattery(const std::map<std::string, std::string> &d, float x, float y, float w);
-        float drawCardGeneric(const std::string &name, const std::map<std::string, std::string> &d, float x, float y, float w);
+        float drawCardDateTime(const std::string &data, float x, float y, float w);
+        float drawCardSystem(const std::string &name, const std::string &data,
+                             float x, float y, float w);
+        float drawCardCpu(const std::string &data, float x, float y, float w);
+        float drawCardRam(const std::string &data, float x, float y, float w);
+        float drawCardNetwork(const std::string &data, float x, float y, float w);
+        float drawCardBattery(const std::string &data, float x, float y, float w);
+        float drawCardGeneric(const std::string &name, const std::string &data,
+                              float x, float y, float w);
 
         void drawRect(float x, float y, float w, float h, sf::Color fill, sf::Color outline = sf::Color::Transparent, float outlineThick = 0.f);
         void drawProgressBar(float x, float y, float w, float h, float percent, sf::Color fill, sf::Color bg);
@@ -62,6 +64,8 @@ class SfmlDisplay : public ADisplay
 
         const CardTheme &getTheme(const std::string &moduleName) const;
         float getTextWidth(const std::string &str, unsigned int size, bool bold = false);
+
+        std::string extractValue(const std::string &data, const std::string &key) const;
 
     public:
         SfmlDisplay(const std::string &name);

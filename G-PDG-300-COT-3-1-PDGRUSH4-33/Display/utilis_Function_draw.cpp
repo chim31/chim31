@@ -2,23 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** SfmlDisplay
 ** File description:
-** SFML display - Modern dark dashboard with card-based layout
-**
-** Color palette:
-**   Background:  #1a1b2e (deep navy)
-**   Card bg:     #232440 (dark slate)
-**   Card border: #2d2f54 (subtle border)
-**   Sidebar:     #16172a (darker navy)
-**   Header:      #1e1f36
-**   Text main:   #e0e0ec
-**   Text dim:    #8888a8
-**   Accent cyan: #00d4aa
-**   Accent blue: #4d8eff
-**   CPU orange:  #ff8c42
-**   RAM purple:  #a855f7
-**   Net green:   #34d399
-**   Battery yel: #fbbf24
-**   Date pink:   #f472b6
+** Primitive drawing helpers
 */
 
 #include "SfmlDisplay.hpp"
@@ -26,18 +10,6 @@
 #include <sstream>
 #include <cmath>
 #include <algorithm>
-
-static const sf::Color BG_MAIN(26, 27, 46);
-static const sf::Color BG_CARD(35, 36, 64);
-static const sf::Color BG_CARD_BORDER(45, 47, 84);
-static const sf::Color BG_SIDEBAR(22, 23, 42);
-static const sf::Color BG_HEADER(30, 31, 54);
-static const sf::Color BG_BAR(40, 42, 70);
-static const sf::Color TEXT_MAIN(224, 224, 236);
-static const sf::Color TEXT_DIM(136, 136, 168);
-static const sf::Color TEXT_LABEL(160, 162, 200);
-static const sf::Color ACCENT_CYAN(0, 212, 170);
-static const sf::Color ACCENT_BLUE(77, 142, 255);
 
 void SfmlDisplay::drawRect(float x, float y, float w, float h, sf::Color fill, sf::Color outline, float outlineThick)
 {
@@ -89,7 +61,7 @@ void SfmlDisplay::drawCardHeader(const std::string &icon, const std::string &tit
 {
     (void)w;
     this->drawText(icon, x + (float)CARD_PAD, y, 14, accent, true);
-    this->drawText(title, x + (float)CARD_PAD + 20.f, y, 14, TEXT_MAIN, true);
+    this->drawText(title, x + (float)CARD_PAD + 20.f, y, 14, sf::Color(224, 224, 236), true);
 }
 
 void SfmlDisplay::drawSeparator(float x, float y, float w, sf::Color color)
